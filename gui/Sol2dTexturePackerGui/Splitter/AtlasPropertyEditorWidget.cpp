@@ -38,11 +38,13 @@ void AtlasPropertyEditorWidget::setPack(const QString & _data_file, AtlasPack * 
         m_edit_texture_size->setText(QString("%1x%2").arg(m_pack->texture().width()).arg(m_pack->texture().height()));
         m_edit_texture_file->setText(m_pack->textureFilename());
         m_edit_data_file->setText(_data_file);
+        m_edit_color_to_alpha->setText(m_pack->atlas().color_to_alpha);
     }
     else
     {
         m_edit_texture_size->clear();
         m_edit_texture_file->clear();
         m_edit_data_file->clear();
+        m_edit_color_to_alpha->clear();
     }
 }

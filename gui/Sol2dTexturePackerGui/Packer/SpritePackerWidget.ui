@@ -165,34 +165,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <layout class="QHBoxLayout" name="m_layout">
-           <property name="spacing">
-            <number>2</number>
-           </property>
-           <item>
-            <widget class="QLineEdit" name="m_edit_color_to_alpha">
-             <property name="placeholderText">
-              <string>Hex color (e.g., #e6b800)</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="m_btn_pick_color_to_alpha">
-             <property name="maximumSize">
-              <size>
-               <width>35</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Pick...</string>
-             </property>
-             <property name="text">
-              <string notr="true">...</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="ColorPickerInput" name="m_color_picker" native="true"/>
          </item>
         </layout>
        </widget>
@@ -502,6 +475,12 @@
    <header location="global">Sol2dTexturePackerGui/SpriteListWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>ColorPickerInput</class>
+   <extends>QWidget</extends>
+   <header location="global">Sol2dTexturePackerGui/ColorPickerInput.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>m_spin_max_width</tabstop>
@@ -509,8 +488,7 @@
   <tabstop>m_checkbox_crop</tabstop>
   <tabstop>m_checkbox_detect_duplicates</tabstop>
   <tabstop>m_checkbox_color_to_alpha</tabstop>
-  <tabstop>m_edit_color_to_alpha</tabstop>
-  <tabstop>m_btn_pick_color_to_alpha</tabstop>
+  <tabstop>m_color_picker</tabstop>
   <tabstop>m_combo_algorithm</tabstop>
   <tabstop>m_combo_mrb_heuristic</tabstop>
   <tabstop>m_checkbox_mrb_allow_flip</tabstop>

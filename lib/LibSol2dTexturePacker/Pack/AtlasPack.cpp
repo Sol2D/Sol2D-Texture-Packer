@@ -22,6 +22,11 @@ AtlasPack::AtlasPack(const Atlas & _atlas, QObject * _parent) :
     Pack(_atlas.texture, _parent),
     m_atlas(_atlas)
 {
+    if(!m_atlas.color_to_alpha.isEmpty())
+    {
+        QColor alpha = QColor::fromString(m_atlas.color_to_alpha);
+        if(alpha.isValid()) setColorToAlpha(alpha.rgb());
+    }
 }
 
 qsizetype AtlasPack::frameCount() const

@@ -54,7 +54,27 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="m_checkbox_color_to_alpha">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Color to alpha</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="1">
+    <widget class="ColorPickerInput" name="m_color_picker" native="true">
+     <property name="focusPolicy">
+      <enum>Qt::FocusPolicy::StrongFocus</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
     <spacer name="m_spacer_5">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -70,14 +90,14 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="m_label_rows">
      <property name="text">
       <string>Rows</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QSpinBox" name="m_spin_rows">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -90,14 +110,14 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="m_label_columns">
      <property name="text">
       <string>Columns</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <widget class="QSpinBox" name="m_spin_columns">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -110,7 +130,7 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
+   <item row="6" column="1">
     <spacer name="m_spacer_2">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -126,14 +146,14 @@
      </property>
     </spacer>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QLabel" name="m_label_sprite_width">
      <property name="text">
       <string>Sprite width</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
+   <item row="7" column="1">
     <widget class="QSpinBox" name="m_spin_sprite_width">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -146,14 +166,14 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="m_label_sprite_height">
      <property name="text">
       <string>Sprite height</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="QSpinBox" name="m_spin_sprite_height">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -166,7 +186,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="9" column="1">
     <spacer name="m_spacer_3">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -182,14 +202,14 @@
      </property>
     </spacer>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="m_label_hspacing">
      <property name="text">
       <string>Horizontal spacing</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1">
+   <item row="10" column="1">
     <widget class="QSpinBox" name="m_spin_hspacing">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -202,14 +222,14 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item row="11" column="0">
     <widget class="QLabel" name="m_label_vspacing">
      <property name="text">
       <string>Vertical spacing</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
+   <item row="11" column="1">
     <widget class="QSpinBox" name="m_spin_vspacing">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -222,7 +242,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="12" column="1">
     <spacer name="m_spacer_4">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -238,7 +258,7 @@
      </property>
     </spacer>
    </item>
-   <item row="12" column="0">
+   <item row="13" column="0">
     <widget class="QLabel" name="m_label_margin_left">
      <property name="text">
       <string>Margin left</string>
@@ -248,7 +268,7 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="1">
+   <item row="13" column="1">
     <widget class="QSpinBox" name="m_spin_margin_left">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -267,7 +287,7 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="0">
+   <item row="14" column="0">
     <widget class="QLabel" name="m_label_margin_top">
      <property name="text">
       <string>Margin top</string>
@@ -277,7 +297,7 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="1">
+   <item row="14" column="1">
     <widget class="QSpinBox" name="m_spin_margin_top">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -296,7 +316,7 @@
      </property>
     </widget>
    </item>
-   <item row="14" column="0" colspan="2">
+   <item row="15" column="1">
     <spacer name="m_spacer">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -311,9 +331,19 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorPickerInput</class>
+   <extends>QWidget</extends>
+   <header location="global">Sol2dTexturePackerGui/ColorPickerInput.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>m_edit_texture_file</tabstop>
   <tabstop>m_edit_texture_size</tabstop>
+  <tabstop>m_checkbox_color_to_alpha</tabstop>
+  <tabstop>m_color_picker</tabstop>
   <tabstop>m_spin_rows</tabstop>
   <tabstop>m_spin_columns</tabstop>
   <tabstop>m_spin_sprite_width</tabstop>

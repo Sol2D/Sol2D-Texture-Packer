@@ -46,7 +46,6 @@ private slots:
     void browseForExportDir();
     void validateExportPackRequirements();
     void onColorToAlphaToggle();
-    void pickColorToAlpha();
     void onTextureWidthChanged();
     void onTextureHeightChanged();
     void onAlgorithmChanged();

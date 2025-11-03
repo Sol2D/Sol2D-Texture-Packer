@@ -16,33 +16,59 @@
  *                                                                                                        *
  **********************************************************************************************************/
 
-#pragma once
+#include <Sol2dTexturePackerGui/ColorPickerInput.h>
+#include <QColorDialog>
 
-#include <QWidget>
-#include <LibSol2dTexturePacker/Pack/GridPack.h>
-#include "ui_GridPropertyEditorWidget.h"
-
-class GridPropertyEditorWidget : public QWidget, private Ui::GridPropertyEditorWidget
+ColorPickerInput::ColorPickerInput(QWidget * _parent) :
+    QWidget(_parent),
+    m_is_alpha_enabled(false)
 {
-    Q_OBJECT
+    setupUi(this);
+    connect(m_btm_pick, &QPushButton::clicked, this, &ColorPickerInput::pickColor);
+    setColor(QColor());
+}
 
-public:
-    explicit GridPropertyEditorWidget(QWidget * _parent = nullptr);
-    void setPack(GridPack * _pack);
-    void unsetPack() { setPack(nullptr); }
+void ColorPickerInput::setColor(const QColor & _color) {
+    m_current_color = _color;
+    if(m_is_alpha_enabled)
+    {
+        m_edit_color->setText(QString("#%1%2%3%4")
+            .arg(m_current_color.red(), 2, 16, '0')
+            .arg(m_current_color.green(), 2, 16, '0')
+            .arg(m_current_color.blue(), 2, 16, '0')
+            .arg(m_current_color.alpha(), 2, 16, '0'));
+    }
+    else
+    {
+        m_edit_color->setText(QString("#%1%2%3")
+        .arg(m_current_color.red(), 2, 16, '0')
+        .arg(m_current_color.green(), 2, 16, '0')
+        .arg(m_current_color.blue(), 2, 16, '0'));
+    }
+}
 
-private slots:
-    void onColorToAlphaCheckboxToggle();
-    void onColorToAlphaChanged();
-    void onRowCountChanged(int _value);
-    void onColumnCountChanged(int _value);
-    void onSpriteWidthChanged(int _value);
-    void onSpriteHeightChanged(int _value);
-    void onMarginLeftChanged(int _value);
-    void onMarginTopChanged(int _value);
-    void onHorizontalSpacingChanged(int _value);
-    void onVerticalSpacingChanged(int _value);
+void ColorPickerInput::enableAlphaChannel(bool _enable)
+{
+    if(_enable != m_is_alpha_enabled)
+    {
+        m_is_alpha_enabled = _enable;
+        setColor(m_current_color);
+    }
+}
 
-private:
-    GridPack * m_pack;
-};
+void ColorPickerInput::clear()
+{
+    m_current_color = QColor();
+    m_edit_color->clear();
+}
+
+void ColorPickerInput::pickColor()
+{
+    QColorDialog dlg(m_current_color, this);
+    dlg.setOption(QColorDialog::ShowAlphaChannel, m_is_alpha_enabled);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        setColor(dlg.currentColor());
+        emit colorChanged();
+    }
+}

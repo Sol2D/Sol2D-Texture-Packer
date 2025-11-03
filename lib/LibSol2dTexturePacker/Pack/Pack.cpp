@@ -20,6 +20,76 @@
 #include <LibSol2dTexturePacker/Exception.h>
 #include <QPainter>
 
+class Pack::Texture
+{
+public:
+    bool load(const QString & _filename)
+    {
+        m_modified_image = QImage();
+        m_original_image = QImage();
+        return m_original_image.load(_filename);
+    }
+
+    bool isLoaded() const
+    {
+        return !m_original_image.isNull();
+    }
+
+    const QImage & image() const
+    {
+        return m_modified_image.isNull() ? m_original_image : m_modified_image;
+    }
+
+    void setColorToAlpha(QRgb _color)
+    {
+        if(!m_original_image.isNull())
+        {
+            m_modified_image = m_original_image;
+            m_modified_image.setAlphaChannel(m_original_image.createMaskFromColor(_color, Qt::MaskOutColor));
+        }
+    }
+
+    void removeColorToAlpha()
+    {
+        m_modified_image = QImage();
+    }
+
+private:
+    QImage m_original_image;
+    QImage m_modified_image;
+};
+
+Pack::Pack(const QString & _texture_filename, QObject * _parent) :
+    QObject(_parent),
+    m_texture_filename(_texture_filename),
+    m_texture(new Texture)
+{
+}
+
+Pack::~Pack()
+{
+    delete m_texture;
+}
+
+void Pack::setColorToAlpha(QRgb _color)
+{
+    ensureTextureIsLoaded()->setColorToAlpha(_color);
+    emit textureChanged();
+}
+
+void Pack::removeColorToAlpha()
+{
+    ensureTextureIsLoaded()->removeColorToAlpha();
+    emit textureChanged();
+}
+
+Pack::Texture * Pack::ensureTextureIsLoaded() const
+{
+    if(!m_texture->isLoaded() && !m_texture->load(m_texture_filename))
+        throw ImageLoadingException(m_texture_filename);
+    return m_texture;
+}
+
 void Pack::unpack(const QDir & _output_dir, const QString & _format) const
 {
     forEachFrame([&](const Frame & __frame) {
@@ -54,10 +124,5 @@ QString Pack::makeUnpackFilename(const QDir & _output_dir, const QString & _form
 
 const QImage & Pack::texture() const
 {
-    if(m_texture.isNull())
-    {
-        if(!m_texture.load(m_texture_filename))
-            throw ImageLoadingException(m_texture_filename);
-    }
-    return m_texture;
+    return ensureTextureIsLoaded()->image();
 }

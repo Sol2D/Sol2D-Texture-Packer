@@ -18,31 +18,29 @@
 
 #pragma once
 
-#include <QWidget>
-#include <LibSol2dTexturePacker/Pack/GridPack.h>
-#include "ui_GridPropertyEditorWidget.h"
+#include "ui_ColorPickerInput.h"
+#include <QColor>
 
-class GridPropertyEditorWidget : public QWidget, private Ui::GridPropertyEditorWidget
+
+class ColorPickerInput : public QWidget, private Ui::ColorPickerInput
 {
     Q_OBJECT
 
 public:
-    explicit GridPropertyEditorWidget(QWidget * _parent = nullptr);
-    void setPack(GridPack * _pack);
-    void unsetPack() { setPack(nullptr); }
+    explicit ColorPickerInput(QWidget * _parent = nullptr);
+    void clear();
+    void setColor(const QColor & _color);
+    QColor color() const { return m_current_color; }
+    void enableAlphaChannel(bool _enable);
+    QString colorHex() const { return m_edit_color->displayText(); }
+
+signals:
+    void colorChanged();
 
 private slots:
-    void onColorToAlphaCheckboxToggle();
-    void onColorToAlphaChanged();
-    void onRowCountChanged(int _value);
-    void onColumnCountChanged(int _value);
-    void onSpriteWidthChanged(int _value);
-    void onSpriteHeightChanged(int _value);
-    void onMarginLeftChanged(int _value);
-    void onMarginTopChanged(int _value);
-    void onHorizontalSpacingChanged(int _value);
-    void onVerticalSpacingChanged(int _value);
+    void pickColor();
 
 private:
-    GridPack * m_pack;
+    QColor m_current_color;
+    bool m_is_alpha_enabled;
 };

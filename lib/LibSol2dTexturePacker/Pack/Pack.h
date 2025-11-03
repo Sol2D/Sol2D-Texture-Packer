@@ -28,14 +28,14 @@ class S2TP_EXPORT Pack : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit Pack(const QString & _texture_filename, QObject * _parent = nullptr) :
-        QObject(_parent),
-        m_texture_filename(_texture_filename)
-    {
-    }
+private:
+    class Texture;
 
-    virtual ~Pack() = default;
+public:
+    explicit Pack(const QString & _texture_filename, QObject * _parent = nullptr);
+    virtual ~Pack();
+    void setColorToAlpha(QRgb _color);
+    void removeColorToAlpha();
     void unpack(const QDir & _output_dir, const QString & _format) const;
     Sprite unpackFrame(const Frame & _frame, const QDir & _output_dir, const QString & _format) const;
     const QImage & texture() const;
@@ -43,10 +43,14 @@ public:
     virtual qsizetype frameCount() const = 0;
     virtual bool forEachFrame(std::function<void(const Frame &)> _cb) const = 0;
 
+signals:
+    void textureChanged();
+
 private:
+    Texture * ensureTextureIsLoaded() const;
     QString makeUnpackFilename(const QDir & _output_dir, const QString & _format, const Frame & _frame) const;
 
 private:
     const QString m_texture_filename;
-    mutable QImage m_texture;
+    mutable Texture * m_texture;
 };

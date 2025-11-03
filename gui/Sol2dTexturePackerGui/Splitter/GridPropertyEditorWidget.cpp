@@ -23,6 +23,12 @@ GridPropertyEditorWidget::GridPropertyEditorWidget(QWidget * _parent) :
     m_pack(nullptr)
 {
     setupUi(this);
+    connect(
+        m_checkbox_color_to_alpha,
+        &QCheckBox::checkStateChanged,
+        this,
+        &GridPropertyEditorWidget::onColorToAlphaCheckboxToggle);
+    connect(m_color_picker, &ColorPickerInput::colorChanged, this, &GridPropertyEditorWidget::onColorToAlphaChanged);
     connect(m_spin_rows, &QSpinBox::valueChanged, this, &GridPropertyEditorWidget::onRowCountChanged);
     connect(m_spin_columns, &QSpinBox::valueChanged, this, &GridPropertyEditorWidget::onColumnCountChanged);
     connect(m_spin_sprite_width, &QSpinBox::valueChanged, this, &GridPropertyEditorWidget::onSpriteWidthChanged);
@@ -31,6 +37,28 @@ GridPropertyEditorWidget::GridPropertyEditorWidget(QWidget * _parent) :
     connect(m_spin_margin_top, &QSpinBox::valueChanged, this, &GridPropertyEditorWidget::onMarginTopChanged);
     connect(m_spin_hspacing, &QSpinBox::valueChanged, this, &GridPropertyEditorWidget::onHorizontalSpacingChanged);
     connect(m_spin_vspacing, &QSpinBox::valueChanged, this, &GridPropertyEditorWidget::onVerticalSpacingChanged);
+
+    m_color_picker->setEnabled(m_checkbox_color_to_alpha->isChecked());
+}
+
+void GridPropertyEditorWidget::onColorToAlphaCheckboxToggle()
+{
+    if(m_checkbox_color_to_alpha->isChecked())
+    {
+        m_color_picker->setEnabled(true);
+        if(m_pack) m_pack->setColorToAlpha(m_color_picker->color().rgb());
+    }
+    else
+    {
+        m_color_picker->setEnabled(false);
+        if(m_pack) m_pack->removeColorToAlpha();
+    }
+}
+
+void GridPropertyEditorWidget::onColorToAlphaChanged()
+{
+    if(m_checkbox_color_to_alpha->isChecked() && m_pack)
+        m_pack->setColorToAlpha(m_color_picker->color().rgb());
 }
 
 void GridPropertyEditorWidget::onRowCountChanged(int _value)
@@ -81,6 +109,7 @@ void GridPropertyEditorWidget::setPack(GridPack * _pack)
         const GridOptions & options = m_pack ? m_pack->options() : GridOptions {};
         m_edit_texture_size->setText(QString("%1x%2").arg(m_pack->texture().width()).arg(m_pack->texture().height()));
         m_edit_texture_file->setText(m_pack->textureFilename());
+        m_color_picker->setColor(m_pack->texture().pixel(0, 0));
         m_spin_rows->setValue(options.row_count);
         m_spin_columns->setValue(options.column_count);
         m_spin_sprite_width->setValue(options.sprite_width);
@@ -92,6 +121,7 @@ void GridPropertyEditorWidget::setPack(GridPack * _pack)
     }
     else
     {
+        m_color_picker->clear();
         m_edit_texture_size->clear();
         m_edit_texture_file->clear();
         m_spin_rows->clear();
@@ -103,4 +133,5 @@ void GridPropertyEditorWidget::setPack(GridPack * _pack)
         m_spin_margin_left->clear();
         m_spin_margin_top->clear();
     }
+    m_checkbox_color_to_alpha->setCheckState(Qt::Unchecked);
 }

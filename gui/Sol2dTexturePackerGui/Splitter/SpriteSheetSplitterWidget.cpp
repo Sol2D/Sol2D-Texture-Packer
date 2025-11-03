@@ -86,8 +86,10 @@ void SpriteSheetSplitterWidget::openTexture()
         settings.setValue(Settings::Input::texture_directory, file_info.absolutePath());
         GridPack * grid_pack = new GridPack(filename, this);
         connect(grid_pack, &GridPack::framesChanged, this, &SpriteSheetSplitterWidget::syncWithPack);
+        connect(grid_pack, &GridPack::textureChanged, this, &SpriteSheetSplitterWidget::syncWithPack);
         m_pack = QSharedPointer<Pack>(grid_pack, [this, grid_pack](Pack *) {
             disconnect(grid_pack, &GridPack::framesChanged, this, &SpriteSheetSplitterWidget::syncWithPack);
+            disconnect(grid_pack, &GridPack::textureChanged, this, &SpriteSheetSplitterWidget::syncWithPack);
             grid_pack->deleteLater();
         });
         m_page_grid->setPack(grid_pack);
